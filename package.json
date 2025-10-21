@@ -5,7 +5,6 @@
     "start:all": "concurrently \"cd frontend && npm run dev\" \"cd express-backend && npm run start:server\""
   },
   "dependencies": {
-    "concurrently": "^9.2.1",
     "mongoose": "^8.19.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -13,6 +12,7 @@
   },
   "devDependencies": {
     "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7"
+    "@types/react-dom": "^19.1.7",
+    "concurrently": "^9.2.1"
   }
 }

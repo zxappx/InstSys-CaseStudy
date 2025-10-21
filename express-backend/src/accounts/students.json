@@ -18,5 +18,13 @@
     "email": "a@g.com",
     "password": "Qwer123!",
     "role": "student IT"
+  },
+  "PDM-0123-456789": {
+    "studentName": "Matsala Nalang Sa Lahat",
+    "year": "First Year",
+    "course": "Bachelor of Science in Hospitality Management (BSHM)",
+    "email": "nams.pdm@gmail.com",
+    "password": "Namaste1!",
+    "role": "student HM"
   }
 }

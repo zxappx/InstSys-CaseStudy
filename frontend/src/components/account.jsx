@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const courseMap = {
   BSCS: "Bachelor of Science in Computer Science (BSCS)",
@@ -10,23 +10,49 @@ const courseMap = {
   BTLEd: "Bachelor of Technology in Livelihood Education (BTLEd)"
 };
 
-export default function Account({ studentData }) {
-  if (!studentData) {
-    return <div className="p-4 text-xl">No student data found.</div>;
-  }
+export default function Account() {
+ const [studentData, setStudentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const studentId = localStorage.getItem("studentId");
+    if (!studentId) {
+      setLoading(false);
+      return;
+    }
+
+    fetch(`http://localhost:5000/account/${studentId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setStudentData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch student data:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="p-4 text-xl">Loading account info...</div>;
+  if (!studentData) return <div className="p-4 text-xl">No student data found.</div>;
 
   const fullCourse = courseMap[studentData.course] || studentData.course;
 
+
   return (
     <div className="w-full h-full gap-5 p-4 flex flex-col">
+      {/* Profile Header */}
       <div className="flex gap-4 p-3 shadow-md bg-gray-100/70 rounded-lg w-full h-[20%] items-center">
         <div className="h-full aspect-square bg-white shadow-lg rounded-full flex-shrink-0"></div>
         <div className="flex flex-col gap-3">
-          <h1 className="text-5xl font-medium">{studentData.firstName} {studentData.lastName}</h1>
+          <h1 className="text-5xl font-medium">
+            {studentData.firstName} {studentData.lastName}
+          </h1>
           <h2 className="text-3xl">{studentData.role}</h2>
         </div>
       </div>
 
+      {/* Full Name Section */}
       <div className="flex flex-col gap-4 p-5 shadow-md bg-gray-100/70 rounded-lg w-full h-[20%]">
         <h1 className="text-3xl font-bold">FULL NAME</h1>
         <div className="flex justify-between">
@@ -45,6 +71,7 @@ export default function Account({ studentData }) {
         </div>
       </div>
 
+      {/* Student Info Section */}
       <div className="flex gap-4 p-5 shadow-md bg-gray-100/70 rounded-lg w-full h-[35%]">
         <div className="flex flex-col gap-3 justify-between">
           <h1 className="text-3xl font-medium">INFORMATION</h1>
@@ -65,10 +92,11 @@ export default function Account({ studentData }) {
         </div>
       </div>
 
+      {/* Additional Info Section */}
       <div className="flex gap-4 p-3 shadow-md bg-gray-100/70 rounded-lg w-full h-[20%]">
         <div className="flex flex-col gap-3">
           <h1 className="text-3xl font-medium">Additional Student Information</h1>
-          {/* Add any additional info here */}
+          {/* You can add more fields here if needed */}
         </div>
       </div>
     </div>

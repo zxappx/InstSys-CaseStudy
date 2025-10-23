@@ -7,6 +7,9 @@ import registerRoute from "./routes/registerRoute.js";
 import refreshCollections from "./routes/refreshCollections.js";
 import { callPythonAPI, configPythonAPI } from "./API/PythonAPI.js";
 import accountRoute from "./routes/accountRoute.js";
+import fileuploadRoute from "./routes/fileuploadRoute.js";
+import chatpromptRoute from "./routes/chatpromptRoute.js";
+
 const app = express();
 
 console.log("server is starting...");
@@ -28,11 +31,15 @@ app.get("/health", (req, res) => {
   console.log("Health check endpoint was called.");
 });
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/", loginRoute);
 app.use("/student", fetchStudentRoute);
 app.use("/", refreshCollections);
 app.use("/", registerRoute);
 app.use("/", accountRoute);
+app.use("/", fileuploadRoute);
+app.use("/", chatpromptRoute);
 
 // ✅ Example endpoint that talks to Python
 app.get("/v1/chat/prompt", async (req, res) => {

@@ -5,6 +5,6 @@
         "course": "",
         "email": "",
         "password": "",
-        "role": "Guest"
+        "role": "admin"
     }
 }
